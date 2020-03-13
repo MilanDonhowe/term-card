@@ -2,7 +2,7 @@
 
 No data-store note card sharing web-app.
 
-This is a simple Vue.js app which allows users to share a collection of notecards by encoding notecards as a JSON object which then undergoes LZMA compression into a base64 encoded URL.  In other words, all data is stored in the URL, not in a server.  As such anyone would be able to view [my notecard set here](https://milandonhowe.github.io/termNote/index.html#XQAAAQAfAgAAAAAAAAAtnsBHQ2R5WksnmQWYP4Pg9UxL8BZIkW/ML1rOsQu4C/zWUYc+TBNYrlJIdtgpqKKa6qzqDwMEIcIUO9NwvDrfIbk7ZdYwn9DNL5uFtvQC//8Z/1FptPkZ+8W1dzWxxoy9yGxJwQhU/k3Nkt70+jo2x3Tyh5YWI2f3mwz93IkVXPKT8h8f2gN4+FxJ3aKKh4ALRbLiY9nE7yNx471v0Gp/w/ksJG3f/Wi5qQ==).
+This is a simple Vue.js app which allows users to share a collection of notecards by encoding notecards as a JSON object which then undergoes LZMA compression into a base64 encoded URL.  In other words, all data is stored in the URL, not in a server.  As such anyone would be able to view [my notecard set here](https://milandonhowe.github.io/term-card/index.html#XQAAAQAfAgAAAAAAAAAtnsBHQ2R5WksnmQWYP4Pg9UxL8BZIkW/ML1rOsQu4C/zWUYc+TBNYrlJIdtgpqKKa6qzqDwMEIcIUO9NwvDrfIbk7ZdYwn9DNL5uFtvQC//8Z/1FptPkZ+8W1dzWxxoy9yGxJwQhU/k3Nkt70+jo2x3Tyh5YWI2f3mwz93IkVXPKT8h8f2gN4+FxJ3aKKh4ALRbLiY9nE7yNx471v0Gp/w/ksJG3f/Wi5qQ==).
 
 Bulma was used as the CSS framework for styling elements.
 
