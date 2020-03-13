@@ -1,0 +1,21 @@
+{
+  "name": "term_card",
+  "version": "1.0.0",
+  "description": "no datastore notecard client!",
+  "main": "sass/styles.scss",
+  "dependencies": {
+    "bulma-spacing": "^1.0.2"
+  },
+  "devDependencies": {
+    "bulma": "^0.8.0",
+    "node-sass": "^4.13.1"
+  },
+  "scripts": {
+    "css-build": "node-sass --omit-source-map-url sass/styles.scss css/styles.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "npm run css-watch"
+  },
+  "keywords": [],
+  "author": "Milan Donhowe",
+  "license": "bruh idk"
+}

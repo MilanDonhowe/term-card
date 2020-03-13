@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>term-cards</title>
+    <link rel="shortcut icon" type="image/png" href="favicon-32x32.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link type="text/css" rel="stylesheet" href="css/styles.css">
+    <link type="text/css" rel="stylesheet" href="css/animate_card.css">
+    <!--magic russian compression algorithm script-->
+    <script src="js/lzma_worker-min.js"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <section class="hero is-danger is-bold is-large has-text-centered">
+            <div class="hero-head">
+                <h1 class="title">{{title}}</h1>
+            </div>
+            <div class="hero-foot">
+                <h2 class="subtitle">{{subtitle}}</h2>
+            </div>
+        </section>
+        <section class="container is-fluid columns is-centered">
+            <section class="section column level-right is-half">
+                <div v-if="edit" id="editor">
+                    <h2>Edit Mode Toggled</h2>
+                    <div class="card_input">
+                        <transition-group name="edit" mode="in-out">
+                            <notecard-input v-for="entry in notecards" v-bind:card="entry" v-bind:key="entry.u_id">
+                            </notecard-input>
+                        </transition-group>
+                    </div>
+                    <div class="level column is-centered">
+                        <div class="level field">
+                            <p class="control level-item level-left">
+                                <button class="button contorl is-success" v-on:click="add_note_card">
+                                    <svg id="i-plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16"
+                                        height="16" fill="none" stroke="currentcolor" stroke-linecap="square"
+                                        stroke-linejoin="round" stroke-width="10">
+                                        <path d="M16 2 L16 30 M2 16 L30 16" />
+                                    </svg>
+                                    <p class="has-text-centered">Add</p>
+                                </button>
+                            </p>
+                            <p class="control level-item level-left">
+                                <button class="button control is-info" v-on:click="switch_mode">
+                                    <svg id="i-eye" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16"
+                                        height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="3">
+                                        <circle cx="17" cy="15" r="1" />
+                                        <circle cx="16" cy="16" r="6" />
+                                        <path
+                                            d="M2 16 C2 16 7 6 16 6 25 6 30 16 30 16 30 16 25 26 16 26 7 26 2 16 2 16 Z" />
+                                    </svg>
+                                    <p class="has-text-centered">View</p>
+                                </button>
+                            </p>
+                            <p class="control level-item level-left">
+                                <button class="button control is-warning" v-on:click="del_note_card">
+                                    <svg id="i-minus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16"
+                                        height="16" fill="none" stroke="currentcolor" stroke-linecap="square"
+                                        stroke-linejoin="round" stroke-width="10">
+                                        <path d="M2 16 L30 16" />
+                                    </svg>
+                                    <p class="has-text-centered">Delete</p>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="!edit" id="viewer">
+                    <h2>Viewing Mode Toggled</h2>
+                    <transition-group name="shuffle" tag="ul">
+                        <li class="content column has-padding-15" v-for="card in notecards" v-bind:key="card.u_id">
+                            <div v-bind:key="card.u_id" v-on:click="card.show=!card.show">
+                                <transition mode="out-in" name="flip">
+                                    <span v-bind:key="card.term" v-if="card.show"
+                                        class="card-pad box card card-content media">
+                                        <div class="has-padding-8 media-content has-text-centered">
+                                            <strong>{{card.term}}</strong>
+                                        </div>
+                                    </span>
+                                    <span v-bind:key="card.def" v-else class="card card-content box media">
+                                        <div class="has-padding-8 media-content has-text-centered">
+                                            <strong>{{card.def}}</strong>
+                                        </div>
+                                    </span>
+                                </transition>
+                            </div>
+                        </li>
+                    </transition-group>
+                    <div class="level">
+
+                        <button class="button level-item level-left" v-on:click="share_note_cards">
+                            <svg id="i-send" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16"
+                                height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2">
+                                <path d="M2 16 L30 2 16 30 12 20 Z M30 2 L12 20" />
+                            </svg>
+                            <p class="has-padding-3">Share</p>
+                        </button>
+
+                        <button class="button level-item level-left" v-on:click="shuffle_cards">
+                            <svg id="i-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+                                width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2">
+                                <circle cx="16" cy="7" r="2" />
+                                <circle cx="16" cy="16" r="2" />
+                                <circle cx="16" cy="25" r="2" />
+                            </svg>
+                            <p class="has-padding-3">Shuffle Card Order</p>
+                        </button>
+
+                        <button class="button level-item level-left" v-on:click="switch_mode">
+                            <svg id="i-edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16"
+                                height="16" fill="none" stroke="currentcolor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2">
+                                <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+                            </svg>
+                            <p class="has-padding-3">Edit Note Cards</p>
+                        </button>
+
+                    </div>
+                    <div v-if="share">
+                        <span class="level has-margin-2">
+                            <p class="level-item">Send the link to someone and they'll be able to see your note cards!
+                            </p>
+                        </span>
+                        <span class="level">
+                            <input class="level-item is-rounded input select" v-bind:value=share_url readonly>
+                        </span>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+    <footer>
+        <p><a alt="the link to github page containing the website's source code" target="_blank"
+                href="https://github.com/MilanDonhowe/termNote">fork me on github!</a></p>
+    </footer>
+    <script src="js/logic.js"></script>
+</body>
+
+</html>

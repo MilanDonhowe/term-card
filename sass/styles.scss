@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+// import font from google
+@import url('https://fonts.googleapis.com/css?family=Sen:400,800&display=swap');
+
+
+// customized bulma theme
+$family-primary: 'Sen', sans-serif;
+$danger: rgb(94, 77, 100);
+$card-content-padding: 3rem;
+$warning: rgb(231, 64, 64);
+
+
+
+// import bulma
+@import "../node_modules/bulma/bulma.sass";
+@import "../node_modules/bulma-spacing/bulma-spacing.scss";
+$card-shadow: 1em 1em 1em -0.125em rgba($scheme-invert, 1.0), 0 1px 0 2px rgba($scheme-invert, 1.0);
